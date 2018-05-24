@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>探索者情報</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="./viewer.js"></script>
+</head>
+<body>
+	<style>
+		input {
+			width:80%;
+		}
+	</style>
+	<div id="header">
+		<h3>対戦型クトゥルフ神話TRPG「さいばぁすぺぇす」用キャラシート作成ツール</h3>
+	</div>
+	<div id="status">
+		<h2>能力値</h2>
+		<p>
+			能力値の合計値が100になるように割り振ってください。ただし、各値の上限下限は守ってください。
+		</p>
+		合計:<span id="status-sum"></span>/100
+		<form id="statusform" style="margin:0px" action='#'>
+		<table  width="100%">
+		<tr>
+			<th>STR<br><span class="sm">3-18</span></th>
+			<th>CON<br><span class="sm">3-18</span></th>
+			<th>POW<br><span class="sm">3-18</span></th>
+			<th>DEX<br><span class="sm">3-18</span></th>
+			<th>APP<br><span class="sm">3-18</span></th>
+			<th>SIZ<br><span class="sm">8-18</span></th>
+			<th>INT<br><span class="sm">8-18</span></th>
+			<th>EDU<br><span class="sm">6-21</span></th>
+		</tr>
+		<tr>
+			<td><input type="number" name="str" value=3></td>
+			<td><input type="number" name="con" value=3></td>
+			<td><input type="number" name="pow" value=3></td>
+			<td><input type="number" name="dex" value=3></td>
+			<td><input type="number" name="app" value=3></td>
+			<td><input type="number" name="siz" value=8></td>
+			<td><input type="number" name="int" value=8></td>
+			<td><input type="number" name="edu" value=6></td>
+		</tr>
+		</table>
+		</form>
+		<script type="text/javascript">
+			$('#statusform').change(calcStatus);
+		</script>
+
+		<table width="100%">
+		<tr>
+			<th>HP</th>
+			<th>MP</th>
+			<th>SAN</th>
+			<th>アイデア</th>
+			<th>幸運</th>
+			<th>知識</th>
+			<th>DB</th>
+		</tr>
+		<tr id="table2">
+		</tr>
+		</table>
+	</div>
+
+</body>
+</html>

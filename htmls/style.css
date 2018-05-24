@@ -1,0 +1,26 @@
+table {
+	font-size: 20px;
+	margin: 5px;
+	border-collapse: separate;
+	border-spacing: 1px 1px;
+}
+
+th {
+	color:#ffffff;
+	text-align: center;
+	background-color: #535353;
+}
+td {
+	vertical-align: middle;
+	text-align: center;
+	background-color: #dddddd;
+}
+
+input {
+	font-size: 20px;
+}
+
+.sm {
+	font-size: 12px;
+}
+

@@ -9,22 +9,22 @@
         ispos = "POSITIVE";
         for i = ev',
             if real(i) < 0.0 then
-                ispos = "NOT POSITIVE";
+                ispos = "NON-POSITIVE";
             end,
         end
     endfunction
     
 //parameters of the structure
     //rigid bodies
-    m11=10; m12=10; m21=10; m22=10;
-    j11=50; j12=50; j21=50; j22=50;
+    m11=15;  m12=20; m21=20; m22=15;
+    j11=7.5; j12=10; j21=10; j22=7.5;
 
     //links
-    dv11=1;   dv12=1;   dv13=1;   dv21=1;   dv22=1;   dv23=1;
-    kv11=200; kv12=200; kv13=200; kv21=200; kv22=200; kv23=200;
+    dv11=0.3; dv12=0.3; dv13=0.3; dv21=0.3; dv22=0.3; dv23=0.3;
+    kv11=10000; kv12=10000; kv13=10000; kv21=10000; kv22=10000; kv23=10000;
     
-    dc1=0.8; dc2=0.8; dc3=0.8; dc4=0.8; dc5=0.8; dc6=0.8;
-    kc1=300; kc2=300; kc3=300; kc4=300; kc5=300; kc6=300;
+    dc1=0.4; dc2=0.4; dc3=0.4; dc4=0.4; dc5=0.4; dc6=0.4;
+    kc1=11000; kc2=11000; kc3=11000; kc4=11000; kc5=11000; kc6=11000;
     
     //connection
     l111=1; l112=1; l113=1; l114=1; l121=1; l122=1; l123=1; l124=1;
@@ -37,9 +37,22 @@
     phi121=%pi/3; phi122=%pi/3; phi123=%pi/3; phi124=%pi/3;
     phi211=%pi/3; phi212=%pi/3; phi213=%pi/3; phi214=%pi/3;
     phi221=%pi/3; phi222=%pi/3; phi223=%pi/3; phi224=%pi/3;
+    
 // parameter of controller
-    z1=17; p1=10; k1=1; alp1=2; bet1=40;  gam1=10000;
-    z2=17; p2=10; k2=1; alp2=4; bet2=200; gam2=5000;
+ //**select controller**//
+    slctCtrl = 2
+ //*********************//
+    select slctCtrl,
+        case 1 then
+            //P,Q: POSITIVE definite
+            z1=17; p1=10; k1=1; alp1=1; bet1=100;  gam1=15000;
+            z2=17; p2=10; k2=1; alp2=4; bet2=400;  gam2=7500;,
+        case 2 then
+            //P,Q: NON-POSITIVE definite
+            z1=17; p1=5; k1=1; alp1=1; bet1=100;  gam1=400;
+            z2=17; p2=5; k2=1; alp2=2; bet2=400;  gam2=100;,
+        else disp("invalid controller select")
+    end
     
 //matrices of subsystem1,2
     M1 = diag([m11,m11,j11,m12,m12,j12]);
@@ -141,8 +154,8 @@
     Cb = sysdiag(eye(12,12),zeros(12,12),zeros(24,24));
     G = syslin('c',Ab-Bb*F,Bb,Cb);
     
-    tEnd = 130;
-    tStep = 0.05;
+    tEnd = 200;
+    tStep = 0.01;
     t = 0:tStep:tEnd;
     r = zeros(12,tEnd/tStep+1);
     x0 = [0.2 -0.2 0.5 zeros(1,9) zeros(1,36)]'; 
@@ -164,6 +177,6 @@
       xgrid(4); xtitle("rigid body 22");
       //legends(['$x_{ij}(t)$','$y_{ij}(t)$','$\theta_{ij}(t)$'],[2,13,5],font_size=3);
       
-//writeCSV
-    filepath = "C:\resData.csv"
-    write_csv(y',filepath);
+//writeCSV (for visualize software)
+    filepath = "D:\resData.csv"
+    //write_csv(y',filepath);
